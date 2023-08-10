@@ -9,6 +9,7 @@ var blue = Color(0xff17A2E3);
 var green = Color(0xff17B440);
 var gray = Color(0xffEEEEEE);
 var lightGray = Color(0xffF0F0F0);
+
 var primaryGradient = LinearGradient(
   colors: [
     pink,

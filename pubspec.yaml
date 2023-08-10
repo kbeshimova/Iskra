@@ -73,6 +73,8 @@ flutter:
     - assets/icons/account.png
     - assets/icons/swipe.png
     - assets/icons/subtract.png
+    - assets/icons/close-outlined.png
+    - assets/icons/star-filled.png
     - assets/banner-girl.png
     - assets/banner-like.png
     # - images/a_dot_ham.jpeg

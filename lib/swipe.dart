@@ -55,19 +55,18 @@ class _SwipeState extends State<Swipe> {
           ),
           actions: [
             GestureDetector(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: Image.asset(
-                  'assets/icons/tune.png',
-                  height: 20,
-                  width: 20,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Image.asset(
+                    'assets/icons/tune.png',
+                    height: 20,
+                    width: 20,
+                  ),
                 ),
-              ),
-              // onTap: () {
-              //   Navigator.of(context).push(
-              //       MaterialPageRoute(builder: (context) => FilterSwipe()));
-              // }
-            ),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => FilterSwipe()));
+                }),
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Image.asset(
@@ -107,28 +106,35 @@ class _SwipeState extends State<Swipe> {
                       bottom: 20,
                       left: 50,
                       right: 50,
-                      child: Container(
+                      child: SizedBox(
                         width: w,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(12.5),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: white,
-                                  border: Border.all(
-                                    width: 1,
-                                    color: red,
-                                  )),
-                              child: Icon(
-                                Icons.close,
-                                color: red,
-                                size: 30,
-                              ),
-                            ),
+                                height: 40,
+                                width: 40,
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: white,
+                                    border: Border.all(
+                                      width: 1,
+                                      color: red,
+                                    )),
+                                child: Image.asset(
+                                  'assets/icons/close-outlined.png',
+                                )
+                                // Icon(
+                                //   Icons.close,
+                                //   color: red,
+                                //   size: 30,
+                                // ),
+                                ),
                             Container(
-                              padding: EdgeInsets.all(12.5),
+                              height: 40,
+                              width: 40,
+                              padding: EdgeInsets.all(4),
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: white,
@@ -139,26 +145,36 @@ class _SwipeState extends State<Swipe> {
                               child: Icon(
                                 Icons.arrow_upward,
                                 color: black,
-                                size: 30,
+                                // size: 40,
                               ),
                             ),
                             Container(
-                              padding: EdgeInsets.all(12.5),
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: white,
-                                  border: Border.all(
-                                    width: 1,
-                                    color: blue,
-                                  )),
-                              child: Icon(
-                                Icons.star_border_outlined,
-                                color: blue,
-                                size: 30,
-                              ),
-                            ),
+                                alignment: Alignment.center,
+                                padding: EdgeInsets.all(4),
+                                height: 40,
+                                width: 40,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: white,
+                                    border: Border.all(
+                                      width: 1,
+                                      color: blue,
+                                    )),
+                                child: Image.asset(
+                                  'assets/icons/star-filled.png',
+                                  // height: 40,
+                                )
+                                //  Icon(
+                                //   Icons.star_border_outlined,
+                                //   color: blue,
+                                //   size: 30,
+                                // ),
+                                ),
                             Container(
-                              padding: EdgeInsets.all(12.5),
+                              height: 40,
+                              width: 40,
+                              alignment: Alignment.center,
+                              // padding: EdgeInsets.all(12.5),
                               decoration: BoxDecoration(
                                   shape: BoxShape.circle,
                                   color: white,
@@ -169,7 +185,7 @@ class _SwipeState extends State<Swipe> {
                               child: Icon(
                                 Icons.favorite_border,
                                 color: green,
-                                size: 30,
+                                // size: 30,
                               ),
                             ),
                           ],

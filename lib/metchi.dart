@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:blur/blur.dart';
+import 'package:iskra/filters.dart';
 import 'package:iskra/global.dart';
 import 'package:flutter/material.dart';
 
@@ -19,12 +20,22 @@ class _MatchesState extends State<Matches> {
 
     return Scaffold(
         appBar: AppBar(
-          leadingWidth: 150,
+          leadingWidth: 45,
           backgroundColor: white,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 14),
-            child: Hero(
-              tag: 'mainlogo',
+            padding: const EdgeInsets.only(left: 10),
+            child: CircleAvatar(
+              backgroundColor: red,
+              radius: 15,
+              child: Image.asset(
+                "assets/avatar.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          title: Hero(
+            tag: 'mainlogo',
+            child: Center(
               child: Image.asset(
                 'assets/logo.png',
                 height: 20,
@@ -33,6 +44,19 @@ class _MatchesState extends State<Matches> {
             ),
           ),
           actions: [
+            GestureDetector(
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Image.asset(
+                    'assets/icons/tune.png',
+                    height: 20,
+                    width: 20,
+                  ),
+                ),
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => FilterSwipe()));
+                }),
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Image.asset(
@@ -225,25 +249,19 @@ class FrostedImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Frosted glass effect
         Container(
           decoration: BoxDecoration(
             color: Colors.transparent,
             image: DecorationImage(
-              image: AssetImage(
-                  'assets/background_image.jpg'), // Replace with your image path
+              image: AssetImage('assets/background_image.jpg'),
               fit: BoxFit.cover,
             ),
           ),
         ),
-
-        // Blurred overlay
         BackdropFilter(
-          filter: ui.ImageFilter.blur(
-              sigmaX: 5.0,
-              sigmaY: 5.0), // Adjust sigma values for blur intensity
+          filter: ui.ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
           child: Container(
-            color: Colors.white.withOpacity(0.0), // Adjust opacity as needed
+            color: Colors.white.withOpacity(0.0),
           ),
         ),
       ],

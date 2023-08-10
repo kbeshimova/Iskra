@@ -32,12 +32,22 @@ class _FilterSwipeState extends State<FilterSwipe> {
     double h = MediaQuery.of(context).size.height;
     return Scaffold(
         appBar: AppBar(
-          leadingWidth: 150,
+          leadingWidth: 45,
           backgroundColor: white,
           leading: Padding(
-            padding: const EdgeInsets.only(left: 15),
-            child: Hero(
-              tag: 'mainlogo',
+            padding: const EdgeInsets.only(left: 10),
+            child: CircleAvatar(
+              backgroundColor: red,
+              radius: 15,
+              child: Image.asset(
+                "assets/avatar.png",
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          title: Hero(
+            tag: 'mainlogo',
+            child: Center(
               child: Image.asset(
                 'assets/logo.png',
                 height: 20,
@@ -47,19 +57,17 @@ class _FilterSwipeState extends State<FilterSwipe> {
           ),
           actions: [
             GestureDetector(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 10),
-                child: Image.asset(
-                  'assets/icons/tune.png',
-                  height: 20,
-                  width: 20,
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Icon(
+                    Icons.keyboard_arrow_up,
+                    color: black,
+                    size: 30,
+                  ),
                 ),
-              ),
-              // onTap: () {
-              //   Navigator.of(context).push(
-              //       MaterialPageRoute(builder: (context) => FilterSwipe()));
-              // }
-            ),
+                onTap: () {
+                  Navigator.of(context).pop();
+                }),
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Image.asset(
@@ -70,6 +78,27 @@ class _FilterSwipeState extends State<FilterSwipe> {
             ),
           ],
           elevation: 0,
+        ),
+        bottomNavigationBar: Container(
+          padding: EdgeInsets.symmetric(vertical: 16, horizontal: 40),
+          height: h * 0.10,
+          width: w,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                gradient: primaryGradient,
+              ),
+              child: Text(
+                'Применить',
+                style: buttonText,
+              ),
+            ),
+          ),
         ),
         body: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
@@ -129,111 +158,94 @@ class _FilterSwipeState extends State<FilterSwipe> {
               for (var b = 0; b < blocks.length; b++)
                 Builder(builder: (context) {
                   var block = blocks[b];
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 21, bottom: 12),
-                        padding: EdgeInsets.only(right: 20, left: 3),
-                        decoration: BoxDecoration(color: block.color),
-                        child: Text(
-                          block.name,
-                          style: smallTitle,
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 21, bottom: 12),
+                          padding: EdgeInsets.only(right: 20, left: 3),
+                          // decoration: BoxDecoration(color: block.color),
+                          child: Text(
+                            block.name,
+                            style:
+                                smallTitle.copyWith(color: Color(0xffC6C6C6)),
+                          ),
                         ),
-                      ),
-                      Builder(builder: (context) {
-                        Map<String, List<Popular>> lists = {};
+                        Builder(builder: (context) {
+                          Map<String, List<Popular>> lists = {};
 
-                        for (var i = 0; i < block.list.length; i++) {
-                          if (i < 5) {
-                            lists['0'] ??= [];
-                            lists['0']!.add(block.list[i]);
-                          } else {
-                            var cindex = i ~/ 5;
-                            lists['$cindex'] ??= [];
-                            lists['$cindex']!.add(block.list[i]);
+                          for (var i = 0; i < block.list.length; i++) {
+                            if (i < 5) {
+                              lists['0'] ??= [];
+                              lists['0']!.add(block.list[i]);
+                            } else {
+                              var cindex = i ~/ 5;
+                              lists['$cindex'] ??= [];
+                              lists['$cindex']!.add(block.list[i]);
+                            }
                           }
-                        }
-                        return Column(
-                          children: [
-                            for (var list in lists.values)
-                              SizedBox(
-                                height: h * 0.05,
-                                child: ListView.builder(
-                                  itemCount: list.length,
-                                  physics: BouncingScrollPhysics(),
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    var popular = list[index];
-                                    return Container(
-                                      margin:
-                                          EdgeInsets.only(right: 7, bottom: 10),
-                                      child: FilterChip(
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                        ),
-                                        backgroundColor: selectedItems["$b"]
-                                                    ?[popular.id] ??
-                                                false
-                                            ? block.color
-                                            : lightGray,
-                                        pressElevation: 0,
-                                        onSelected: (value) {
-                                          setState(() {
-                                            selectedItems["$b"] ??= {};
-                                            selectedItems["$b"]![popular.id] =
-                                                !(selectedItems["$b"]
-                                                        ?[popular.id] ??
-                                                    true);
-                                          });
-                                        },
-                                        label: Text(
-                                          popular.title,
-                                          style: smallText.copyWith(
-                                              color: selectedItems["$b"]
+                          return Column(
+                            children: [
+                              for (var list in lists.values)
+                                SizedBox(
+                                  height: h * 0.05,
+                                  child: ListView.builder(
+                                    itemCount: list.length,
+                                    physics: BouncingScrollPhysics(),
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, index) {
+                                      var popular = list[index];
+                                      return Container(
+                                        margin: EdgeInsets.only(
+                                            right: 7, bottom: 10),
+                                        child: FilterChip(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                          ),
+                                          backgroundColor: selectedItems["$b"]
+                                                      ?[popular.id] ??
+                                                  false
+                                              ? block.color
+                                              : lightGray,
+                                          pressElevation: 0,
+                                          onSelected: (value) {
+                                            setState(() {
+                                              selectedItems["$b"] ??= {};
+                                              selectedItems["$b"]![popular.id] =
+                                                  !(selectedItems["$b"]
                                                           ?[popular.id] ??
-                                                      false
-                                                  ? white
-                                                  : black),
+                                                      true);
+                                            });
+                                          },
+                                          label: Text(
+                                            popular.title,
+                                            style: smallText.copyWith(
+                                                color: selectedItems["$b"]
+                                                            ?[popular.id] ??
+                                                        false
+                                                    ? white
+                                                    : black),
+                                          ),
+                                          avatar: Image.asset(
+                                            popular.icon,
+                                            fit: BoxFit.cover,
+                                            height: 16,
+                                          ),
                                         ),
-                                        avatar: Image.asset(
-                                          popular.icon,
-                                          fit: BoxFit.cover,
-                                          height: 16,
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                      );
+                                    },
+                                  ),
                                 ),
-                              ),
-                          ],
-                        );
-                      }),
-                    ],
+                            ],
+                          );
+                        }),
+                      ],
+                    ),
                   );
                 }),
-              Center(
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => Swipe()));
-                  },
-                  child: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 16, horizontal: 100),
-                    margin: EdgeInsets.only(top: 47, bottom: 113),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      gradient: primaryGradient,
-                    ),
-                    child: Text(
-                      'Применить',
-                      style: buttonText,
-                    ),
-                  ),
-                ),
-              )
             ],
           ),
         ));
@@ -346,60 +358,56 @@ class RangeSliderWithLabels extends StatefulWidget {
 }
 
 class _RangeSliderWithLabelsState extends State<RangeSliderWithLabels> {
-  // RangeValues _currentRangeValues = const RangeValues(0, 100);
-  double _currentValue2 = 30;
+  RangeValues _currentRangeValues = const RangeValues(0, 100);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('0'),
-            Text('100'),
-            // Text(_currentRangeValues.start.round().toString()),
-            // Text(_currentRangeValues.end.round().toString()),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: lightGray, borderRadius: BorderRadius.circular(8)),
+                  child: Text(_currentRangeValues.start.round().toString())),
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: lightGray, borderRadius: BorderRadius.circular(8)),
+                  child: Text(_currentRangeValues.end.round().toString())),
+            ],
+          ),
         ),
         SliderTheme(
           data: SliderThemeData(
             overlayShape: RoundSliderOverlayShape(overlayRadius: 0.0),
             trackHeight: 0.5,
-            showValueIndicator: ShowValueIndicator.always,
-            valueIndicatorColor: Colors.transparent,
+            activeTrackColor: black,
+            inactiveTrackColor: black,
+            thumbColor: red,
+            showValueIndicator: ShowValueIndicator.never,
+            valueIndicatorColor: black,
             valueIndicatorTextStyle: TextStyle(color: Colors.black),
           ),
-          child: Slider(
-            activeColor: black,
-            inactiveColor: black,
-            value: _currentValue2,
+          child: RangeSlider(
+            values: _currentRangeValues,
             min: 0,
             max: 100,
-            label: '${_currentValue2.toInt()}',
-            onChanged: (v) {
+            divisions: 100,
+            labels: RangeLabels(
+              _currentRangeValues.start.round().toString(),
+              _currentRangeValues.end.round().toString(),
+            ),
+            onChanged: (RangeValues values) {
               setState(() {
-                _currentValue2 = v;
+                _currentRangeValues = values;
               });
             },
           ),
-          //  RangeSlider(
-          //   activeColor: black,
-          //   inactiveColor: black,
-          //   values: _currentRangeValues,
-          //   min: 0,
-          //   max: 100,
-          //   divisions: 100,
-          //   labels: RangeLabels(
-          //     _currentRangeValues.start.round().toString(),
-          //     _currentRangeValues.end.round().toString(),
-          //   ),
-          //   onChanged: (RangeValues values) {
-          //     setState(() {
-          //       _currentRangeValues = values;
-          //     });
-          //   },
-          // ),
         ),
       ],
     );
@@ -413,40 +421,70 @@ class RangeSliderWithDistance extends StatefulWidget {
 }
 
 class _RangeSliderWithDistanceState extends State<RangeSliderWithDistance> {
-  double _currentValue = 40;
+  // double _currentValue = 40;
+  RangeValues _currentRangeValues = const RangeValues(0, 100);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('0'),
-            Text('1000'),
-          ],
+        Padding(
+          padding: const EdgeInsets.only(bottom: 8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: lightGray, borderRadius: BorderRadius.circular(8)),
+                  child: Text(_currentRangeValues.start.round().toString())),
+              Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                      color: lightGray, borderRadius: BorderRadius.circular(8)),
+                  child: Text(_currentRangeValues.end.round().toString())),
+            ],
+          ),
         ),
         SliderTheme(
           data: SliderThemeData(
             overlayShape: RoundSliderOverlayShape(overlayRadius: 0.0),
             trackHeight: 0.5,
-            showValueIndicator: ShowValueIndicator.always,
-            valueIndicatorColor: Colors.transparent,
+            activeTrackColor: black,
+            inactiveTrackColor: black,
+            thumbColor: red,
+            showValueIndicator: ShowValueIndicator.never,
+            valueIndicatorColor: black,
             valueIndicatorTextStyle: TextStyle(color: Colors.black),
           ),
-          child: Slider(
-            activeColor: black,
-            inactiveColor: black,
-            value: _currentValue,
+          child: RangeSlider(
+            values: _currentRangeValues,
             min: 0,
             max: 1000,
-            label: '${_currentValue.toInt()}',
-            onChanged: (v) {
+            divisions: 100,
+            labels: RangeLabels(
+              _currentRangeValues.start.round().toString(),
+              _currentRangeValues.end.round().toString(),
+            ),
+            onChanged: (RangeValues values) {
               setState(() {
-                _currentValue = v;
+                _currentRangeValues = values;
               });
             },
           ),
+          //  Slider(
+          //   activeColor: black,
+          //   inactiveColor: black,
+          //   value: _currentValue,
+          //   min: 0,
+          //   max: 1000,
+          //   label: '${_currentValue.toInt()}',
+          //   onChanged: (v) {
+          //     setState(() {
+          //       _currentValue = v;
+          //     });
+          //   },
+          // ),
         ),
       ],
     );
